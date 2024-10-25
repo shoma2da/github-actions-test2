@@ -13,6 +13,8 @@ jobs:
         run: echo ${{ github.event.release.prerelease }}, ${{ github.event.release.tag_name }}
 
   delete-release:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
 
       - name: Delete release and tag
