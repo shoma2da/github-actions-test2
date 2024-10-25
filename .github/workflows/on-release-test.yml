@@ -21,4 +21,5 @@ jobs:
         run: |
           gh release delete ${{ github.event.release.tag_name }} -y
           git push origin --delete ${{ github.event.release.tag_name }}
-
+        env:
+          GH_TOKEN: ${{ github.token }}
