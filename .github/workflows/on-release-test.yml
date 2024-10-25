@@ -1,0 +1,13 @@
+name: "on release test"
+
+on:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: echo ${{ github.event.release.prerelease }}
