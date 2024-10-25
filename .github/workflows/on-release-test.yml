@@ -11,3 +11,12 @@ jobs:
     steps:
       - shell: bash
         run: echo ${{ github.event.release.prerelease }}, ${{ github.event.release.tag_name }}
+
+  delete-release:
+      - uses: actions/checkout@v4
+
+      - name: Delete release and tag
+        run: |
+          gh release delete ${{ github.event.release.tag_name }} -y
+          git push origin --delete ${{ github.event.release.tag_name }}
+
