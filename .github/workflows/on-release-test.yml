@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - shell: bash
-        run: echo ${{ github.event.release.prerelease }}, ${{ github.event.release.tag_name }}
+        run: echo ${{ github.event.release.prerelease }}, ${{ github.event.release.tag_name }}, ${{ github.event_name }}
 
   delete-release:
     runs-on: ubuntu-latest
