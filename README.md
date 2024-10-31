@@ -1,3 +1,3 @@
 # on-release-test
 
-hogehoge
+fugafuga
