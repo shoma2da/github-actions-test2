@@ -25,7 +25,7 @@ jobs:
           release_list=$(gh release list --json tagName,isPrerelease,isDraft)
           echo $release_list
           # prereleaseの有無を取得
-          prerelease_tag=$(echo "release_list=$release_list" | jq -r 'map(select(.isDraft == false and .isPrerelease == true and (.tagName | startswith("release/production/"))))[0].tagName')
+          prerelease_tag=$(echo "$release_list" | jq -r 'map(select(.isDraft == false and .isPrerelease == true and (.tagName | startswith("release/production/"))))[0].tagName')
           echo $prerelease_tag
           if [[ -n "$prerelease_tag" ]]; then
             has_prerelease="true"
