@@ -35,7 +35,7 @@ jobs:
           echo "has_prerelease=$has_prerelease" >> $GITHUB_OUTPUT
 
           # リリース済みのhash取得対応
-          prev_release_tag_name=$(echo "release_list=$release_list" | jq -r 'map(select(.isDraft == false and .isPrerelease == false and (.tagName | startswith("release"))))[0].tagName') # TODO: 既存のリリースの文字列ルールにより初回のみ "release" だが、1回リリースが終わった後は "release/production" に変更する
+          prev_release_tag_name=$(echo "$release_list" | jq -r 'map(select(.isDraft == false and .isPrerelease == false and (.tagName | startswith("release"))))[0].tagName') # TODO: 既存のリリースの文字列ルールにより初回のみ "release" だが、1回リリースが終わった後は "release/production" に変更する
           git fetch --tags --depth=1
           prev_release_tag_hash=$(git rev-list -n 1 "$prev_release_tag_name")
           echo "prev_release_tag_hash=$prev_release_tag_hash" >> $GITHUB_OUTPUT
