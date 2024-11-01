@@ -2,7 +2,7 @@ name: "on release test"
 
 on:
   release:
-    types: [edited]
+    types: [released]
 
 jobs:
   echo:
