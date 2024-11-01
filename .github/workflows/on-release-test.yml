@@ -1,7 +1,6 @@
 name: "on release test"
 
 on:
-  push:
   release:
     types: [published]
 
