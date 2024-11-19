@@ -1,0 +1,18 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: softprops/action-gh-release@v2
+        id: create-gh-release
+        with:
+          prerelease: true
+          name: test-tag
+          tag_name: test-tag
+          generate_release_notes: true
+      
+      - run: echo ${{ steps.create-gh-release.outputs.url }}
