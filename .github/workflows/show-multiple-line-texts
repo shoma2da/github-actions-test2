@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+  
+jobs:
+  show-multiple-line-text:
+    runs-on: ubuntu-latest
+    steps:
+      - id: create-text
+        run: |
+          {
+            echo 'TEXT<<EOF'¥
+            echo "リリース担当者はYOUです。"
+            echo "以下の対応をよろしくお願いします！"
+            echo ""
+            echo "• リリースをスキップする場合は、Pre-releaseを削除してください"
+            echo "• リリースに進む場合は、stg環境の更新後にcommitに含まれる関係者と連携して受け入れテストに進んでください"
+            echo ""
+            echo "リリース詳細フロー：<https://www.google.com>"
+            echo EOF
+          } >> $GITHUB_ENV
+          
+      - run: |
+          echo ${{ env.TEXT }}
