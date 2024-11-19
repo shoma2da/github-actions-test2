@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - echo ${{ event.ref }}
+      - run: echo ${{ github.event.ref }}
