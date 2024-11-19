@@ -6,14 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       last_author_email: ${{ steps.get-last-author-email.outputs.email }}
+      last_author_name: ${{ steps.get-last-author-email.outputs.name }}
     steps:
       - uses: actions/checkout@v4
       
       - id: get-last-author-email
-        run: echo "email=$(git log -1 --pretty=format:'%ae')" >> $GITHUB_OUTPUT
+        run: |
+          echo "email=$(git log -1 --pretty=format:'%ae')" >> $GITHUB_OUTPUT
+          echo "name=$(git log -1 --pretty=format:'%an')" >> $GITHUB_OUTPUT
         
   echo-email:
     needs: [get-author-email]
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ needs.get-author-email.outputs.last_author_email }}
+      - run: |
+          echo ${{ needs.get-author-email.outputs.last_author_email }}
+          echo ${{ needs.get-author-email.outputs.last_author_name }}
