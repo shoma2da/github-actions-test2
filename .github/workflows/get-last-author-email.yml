@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  get-authoer-email:
+  get-author-email:
     runs-on: ubuntu-latest
     outputs:
       last_author_email: ${{ steps.get-last-author-email.outputs.email }}
@@ -10,10 +10,10 @@ jobs:
       - uses: actions/checkout@v4
       
       - id: get-last-author-email
-        run: email=$(git log -1 --pretty=format:'%ae') >> $GITHUB_OUTPUT
+        run: echo "email=$(git log -1 --pretty=format:'%ae')" >> $GITHUB_OUTPUT
         
   echo-email:
-    needs: [get-authoer-email]
+    needs: [get-author-email]
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ needs.get-authoer-email.outputs.last_author_email }}
+      - run: echo ${{ needs.get-author-email.outputs.last_author_email }}
