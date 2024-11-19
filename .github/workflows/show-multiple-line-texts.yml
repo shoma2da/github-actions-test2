@@ -16,4 +16,4 @@ jobs:
           echo "リリース詳細フロー：<https://www.notion.so/microcms/2024-11-142659cde3ea808e91daceed0d3b4a68?pvs=4>" >> temp
           
       - run: |
-          echo $(cat temp)
+          cat temp | sed ':a;N;$!ba;s/\n/\\n/g'
