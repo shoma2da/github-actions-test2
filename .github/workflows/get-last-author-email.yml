@@ -12,8 +12,8 @@ jobs:
       
       - id: get-last-author-email
         run: |
-          echo "email=$(git log -1 --pretty=format:'%ae')" >> $GITHUB_OUTPUT
-          echo "name=$(git log -1 --pretty=format:'%an')" >> $GITHUB_OUTPUT
+          echo "email=\"$(git log -1 --pretty=format:'%ae')\"" >> $GITHUB_OUTPUT
+          echo "name=\"$(git log -1 --pretty=format:'%an')\"" >> $GITHUB_OUTPUT
         
   echo-email:
     needs: [get-author-email]
