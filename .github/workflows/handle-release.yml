@@ -45,5 +45,6 @@ jobs:
     needs: [prepare-release-object]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "tag_name: ${{ needs.prepare-release-object.outputs.tag_name }}"
-      - run: echo "prerelease: ${{ needs.prepare-release-object.outputs.prerelease }}"
+      - run: |
+          echo "tag_name: ${{ needs.prepare-release-object.outputs.tag_name }}"
+          echo "prerelease: ${{ needs.prepare-release-object.outputs.prerelease }}"
