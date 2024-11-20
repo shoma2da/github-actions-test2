@@ -1,0 +1,73 @@
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "リリースのタグ名"
+        type: string
+        required: true
+
+jobs:
+  prepare-release-object:
+    runs-on: ubuntu-latest
+    outputs:
+      id: ${{ steps.set_outputs.outputs.id }}
+      html_url: ${{ steps.set_outputs.outputs.html_url }}
+      upload_url: ${{ steps.set_outputs.outputs.upload_url }}
+      tag_name: ${{ steps.set_outputs.outputs.tag_name }}
+      name: ${{ steps.set_outputs.outputs.name }}
+      body: ${{ steps.set_outputs.outputs.body }}
+      draft: ${{ steps.set_outputs.outputs.draft }}
+      prerelease: ${{ steps.set_outputs.outputs.prerelease }}
+      author: ${{ steps.set_outputs.outputs.author }}
+    steps:
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          ref: ${{ github.event.inputs.tag_name }}
+
+      - name: Handle workflow_dispatch
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        id: get_release
+        uses: bruceadams/get-release@v1.3.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set Outputs
+        id: set_outputs
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "id=${{ steps.get_release.outputs.id }}" >> $GITHUB_OUTPUT
+            echo "html_url=${{ steps.get_release.outputs.html_url }}" >> $GITHUB_OUTPUT
+            echo "upload_url=${{ steps.get_release.outputs.upload_url }}" >> $GITHUB_OUTPUT
+            echo "tag_name=${{ steps.get_release.outputs.tag_name }}" >> $GITHUB_OUTPUT
+            echo "name=${{ steps.get_release.outputs.name }}" >> $GITHUB_OUTPUT
+            echo "body=${{ steps.get_release.outputs.body }}" >> $GITHUB_OUTPUT
+            echo "draft=${{ steps.get_release.outputs.draft }}" >> $GITHUB_OUTPUT
+            echo "prerelease=${{ steps.get_release.outputs.prerelease }}" >> $GITHUB_OUTPUT
+            echo "author=${{ steps.get_release.outputs.author }}" >> $GITHUB_OUTPUT
+          else
+            echo "id=${{ github.event.release.id }}" >> $GITHUB_OUTPUT
+            echo "html_url=${{ github.event.release.html_url }}" >> $GITHUB_OUTPUT
+            echo "upload_url=${{ github.event.release.upload_url }}" >> $GITHUB_OUTPUT
+            echo "tag_name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+            echo "name=${{ github.event.release.name }}" >> $GITHUB_OUTPUT
+            echo "body=${{ github.event.release.body }}" >> $GITHUB_OUTPUT
+            echo "draft=${{ github.event.release.draft }}" >> $GITHUB_OUTPUT
+            echo "prerelease=${{ github.event.release.prerelease }}" >> $GITHUB_OUTPUT
+            echo "author=${{ github.event.release.author }}" >> $GITHUB_OUTPUT
+          fi
+
+  show-params:
+    needs: [prepare-release-object]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ needs.prepare-release-object.outputs.html_url }}
+      - run: echo ${{ needs.prepare-release-object.outputs.upload_url }}
+      - run: echo ${{ needs.prepare-release-object.outputs.tag_name }}
+      - run: echo ${{ needs.prepare-release-object.outputs.name }}
+      - run: echo ${{ needs.prepare-release-object.outputs.body }}
+      - run: echo ${{ needs.prepare-release-object.outputs.draft }}
+      - run: echo ${{ needs.prepare-release-object.outputs.prerelease }}
+      - run: echo ${{ needs.prepare-release-object.outputs.author }}
