@@ -15,11 +15,6 @@ jobs:
       tag_name: ${{ steps.set_outputs.outputs.tag_name }}
       prerelease: ${{ steps.set_outputs.outputs.prerelease }}
     steps:
-      # - uses: actions/checkout@v4
-      #   if: ${{ github.event_name == 'workflow_dispatch' }}
-      #   with:
-      #     ref: ${{ github.event.inputs.tag_name }}
-
       - name: Handle workflow_dispatch
         if: ${{ github.event_name == 'workflow_dispatch' }}
         id: get_release
