@@ -4,6 +4,10 @@ on:
       - main
 
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "リリースのタグ名"
+        type: string
 
 jobs:
   identify-what-to-deploy:
@@ -12,3 +16,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.ref }}
+
+      - run: |
+          echo "tagname: ${{ inputs.tag_name }}"
