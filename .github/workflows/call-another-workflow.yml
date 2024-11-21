@@ -5,6 +5,8 @@ jobs:
   call-another:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+    
       - run: |
           gh workflow run branch-test.yml --field tag_name=from_call-another-workflow
         env:
