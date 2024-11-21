@@ -1,0 +1,9 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  call-another:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          gh workflow run branch-test.yml --field tag_name=from_call-another-workflow
