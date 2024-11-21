@@ -7,3 +7,5 @@ jobs:
     steps:
       - run: |
           gh workflow run branch-test.yml --field tag_name=from_call-another-workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
