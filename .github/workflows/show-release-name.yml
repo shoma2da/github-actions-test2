@@ -11,4 +11,6 @@ jobs:
           echo "tag_name: ${{ github.event.release.tag_name }}"
           echo "html_url: ${{ github.event.release.html_url }}"
           echo "url: ${{ github.event.release.url }}"
-        
+          echo "==========================="
+          echo "author.login: ${{ github.event.release.author.login }}"
+          echo "author.url: ${{ github.event.release.author.url }}"
