@@ -8,6 +8,7 @@ jobs:
     steps:
       - run: |
           echo "name: ${{ github.event.release.name }}"
+          echo "tag_name: ${{ github.event.release.tag_name }}"
           echo "html_url: ${{ github.event.release.html_url }}"
           echo "url: ${{ github.event.release.url }}"
         
