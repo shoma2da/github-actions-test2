@@ -1,0 +1,14 @@
+on:
+  release:
+    types: [deleted]
+    
+jobs:
+  show-diffs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: paths-filter
+        with:
+          filters: |
+            test:
+              - "test/**"
