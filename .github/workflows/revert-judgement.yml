@@ -11,6 +11,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: paths-filter
         with:
+          base: ec1b4976afd74ce2e217ac93a5b4a97e975855da
           filters: |
             test:
               - "test/**"
