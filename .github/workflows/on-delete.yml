@@ -1,0 +1,12 @@
+on:
+  release:
+    types: [deleted]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "tag_name: ${{ github.event.release.tag_name }}"
+          echo "prerelease: ${{ github.event.release.prerelease }}"
+          echo "draft: ${{ github.event.release.draft }}"
