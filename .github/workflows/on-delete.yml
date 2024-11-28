@@ -10,3 +10,4 @@ jobs:
           echo "tag_name: ${{ github.event.release.tag_name }}"
           echo "prerelease: ${{ github.event.release.prerelease }}"
           echo "draft: ${{ github.event.release.draft }}"
+          echo "sha: ${{ github.sha }}"
