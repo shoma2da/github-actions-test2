@@ -4,6 +4,7 @@
 name: "[deploy-workflow] on release"
 
 on:
+  push:
   release:
     types: [released]
 
