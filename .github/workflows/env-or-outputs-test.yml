@@ -4,13 +4,14 @@
 name: "[deploy-workflow] on release"
 
 on:
-  push:
   release:
     types: [released]
 
 jobs:
   check-release-name:
     runs-on: ubuntu-latest
+    outputs:
+      skip_deploy: ${{ steps.check-release-name.outputs.skip_deploy }}
     steps:
       - uses: actions/checkout@v4
 
@@ -18,12 +19,15 @@ jobs:
         id: check-release-name
         run: |
           if [[ ! "${{ github.event.release.tag_name }}" =~ "^release" ]]; then
-            echo "skip_deploy=true" >> $GITHUB_ENV
+            echo "skip_deploy=true" >> $GITHUB_OUTPUT
           fi
+
+      - run: |
+          echo skip_deploy: ${{ steps.check-release-name.outputs.skip_deploy }}
 
   echo-if-not-skip:
     needs: [check-release-name]
-    if: ${{ env.skip_deploy != 'true' }}
+    if: ${{ needs.check-release-name.outputs.skip_deploy != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - run: |
