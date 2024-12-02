@@ -1,0 +1,29 @@
+# リリースフロー(https://www.notion.so/microcms/dee6205725994bf08408142303b484ac?pvs=4)
+# Relaseイベントが発火したときに、リリース名が"release/production"で始まっているばあいはproduction / hpbmstg / saisonstg にデプロイする
+
+name: "[deploy-workflow] on release"
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  check-release-name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check if the release name doesn't starts with "release/production"
+        id: check-release-name
+        run: |
+          if [[ ! "${{ github.event.release.tag_name }}" =~ "^release" ]]; then
+            echo "skip_deploy=true" >> $GITHUB_ENV
+          fi
+
+  echo-if-not-skip:
+    needs: [check-release-name]
+    if: ${{ env.skip_deploy != 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Hello!!!!!"
