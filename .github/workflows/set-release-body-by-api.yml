@@ -18,7 +18,7 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/shoma2da/github-actions-test2/releases/generate-notes \
              -f "tag_name=update-release-1" -f "previous_tag_name=release-example")
-          echo "note=$(echo $res | jq '.body')" >> $GITHUB_OUTPUT
+          echo $res | jq -r '.body' >> ./content.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -28,5 +28,5 @@ jobs:
           prerelease: true
           name: update-release-1
           tag_name: update-release-1
-          body: ${{ steps.generate-notes.outputs.note }}
+          body_path: ./content.txt
           generate_release_notes: false
