@@ -10,13 +10,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - run: |
+      - id: generate-notes
+        run: |
           res=$(gh api \
             --method POST \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/shoma2da/github-actions-test2/releases/generate-notes \
              -f "tag_name=update-release-1" -f "previous_tag_name=release-example")
-           echo $res
+          echo "note=$(echo $res | jq -r '.body')" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: softprops/action-gh-release@v2
+        id: create-release
+        with:
+          prerelease: true
+          name: update-release-1
+          tag_name: update-release-1
+          body: ${{ steps.generate-notes.outputs.note }}
+          generate_release_notes: false
