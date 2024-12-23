@@ -18,4 +18,5 @@ jobs:
             /repos/shoma2da/github-actions-test2/releases/generate-notes \
              -f "tag_name=update-release-1" -f "previous_tag_name=release-example")
            echo $res
-            
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
